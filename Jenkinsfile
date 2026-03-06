@@ -4,17 +4,27 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
-        stage('Test') {
+
+        stage('Test') { 
             steps {
-                sh 'NO_COLOR=1 npm run cy:run'
+                bat 'npm run cy:run'
             }
         }
+
         stage('Deploy') {
             steps {
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'mochawesome-report', reportFiles: 'mochawesome.html', reportName: 'EBAC Report', reportTitles: ''])
+                publishHTML([
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: false,
+                    reportDir: 'mochawesome-report',
+                    reportFiles: 'mochawesome.html',
+                    reportName: 'EBAC Report',
+                    reportTitles: ''
+                ])
             }
         }
     }
